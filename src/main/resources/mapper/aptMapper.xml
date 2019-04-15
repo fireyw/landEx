@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.aptMapper">
+
+    <select id="getTest" resultType="java.lang.Integer">
+        SELECT 123 FROM DUAL
+    </select>
+
+    <insert id="saveAptData" parameterType="java.util.List" >
+        INSERT INTO APT_DEAL(LAWD_CD
+                            ,ZIP
+                            ,DEAL_YEAR
+                            ,DEAL_MON
+                            ,DEAL_DAY
+                            ,PRICE
+                            ,APT_NAME
+                            ,APT_FLOOR
+                            ,APT_SIZE
+                            ,APT_FOUND
+                            ,DONG
+                            ,REGDATE
+                            ,MODDATE
+                            ,USER_ID)
+                      VALUES
+<!--                 <foreach collection="list" item="element" index="index" >-->
+        <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
+                            #{element.lawdCd}
+                            ,#{element.zip}
+                            ,#{element.dealYear}
+                            ,#{element.dealMon}
+                            ,#{element.dealDay}
+                            ,#{element.price}
+                            ,#{element.aptName}
+                            ,#{element.aptFloor}
+                            ,#{element.aptSize}
+                            ,#{element.aptFound}
+                            ,#{element.dong}
+                            ,NOW()
+                            ,NOW()
+                            ,'BATCH'
+                </foreach>
+
+    </insert>
+
+
+</mapper>
