@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,10 @@ public class AptDAO {
 
     public void saveAptData(List<Apt> aptData) {
         this.sqlSession.insert("com.example.demo.mapper.aptMapper.saveAptData", aptData);
+    }
+
+    public int deleteAptData(HashMap map) {
+        return this.sqlSession.delete("com.example.demo.mapper.aptMapper.deleteAptData", map);
     }
 
 }

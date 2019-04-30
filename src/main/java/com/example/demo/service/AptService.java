@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -17,5 +18,9 @@ public class AptService {
 
     public void saveAptData(List<Apt> aptData){
         aptDAO.saveAptData(aptData);
+    }
+
+    public int deleteAptData(HashMap map){
+        return aptDAO.deleteAptData(map);
     }
 }

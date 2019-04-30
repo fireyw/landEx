@@ -25,7 +25,6 @@
                             ,MODDATE
                             ,USER_ID)
                       VALUES
-<!--                 <foreach collection="list" item="element" index="index" >-->
         <foreach item="element" index="index" collection="list" open="(" separator="),(" close=")">
                             #{element.lawdCd}
                             ,#{element.zip}
@@ -41,9 +40,14 @@
                             ,NOW()
                             ,NOW()
                             ,'BATCH'
-                </foreach>
+        </foreach>
 
     </insert>
 
-
+    <delete id="deleteAptData" parameterType="HashMap">
+        DELETE FROM APT_DEAL
+         WHERE LAWD_CD=#{lawdCd}
+           AND DEAL_YEAR=#{dealYear}
+           AND DEAL_MON=#{dealMon}
+    </delete>
 </mapper>

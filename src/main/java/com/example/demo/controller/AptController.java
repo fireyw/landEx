@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Controller
 public class AptController {
@@ -27,10 +28,19 @@ public class AptController {
     @GetMapping("/getAptData")
     @ResponseBody
     public String getAptData() throws Exception {
+        String lawdCD = "11215";
+        //파라미터 받는 것으로 변경 예정
+        String dealYear="2019";
+        String dealMon ="03";
+
+        StringBuilder date = new StringBuilder();
+        date.append(dealYear);
+        date.append(dealMon);
+
         StringBuilder urlBuilder = new StringBuilder("http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=FHMB8NWs0fi%2BoAqRfUc4oarG18XYQ4ii%2BbCdi9JGGlgps%2BMU%2B4rx2%2BTtK9QBZOEx9ABsT0zpA7vgVga5ditSRg%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode("11215", "UTF-8")); /*각 지역별 코드*/
-        urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD", "UTF-8") + "=" + URLEncoder.encode("201904", "UTF-8")); /*월 단위 신고자료*/
+        urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode(lawdCD, "UTF-8")); /*각 지역별 코드*/
+        urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD", "UTF-8") + "=" + URLEncoder.encode(date.toString(), "UTF-8")); /*월 단위 신고자료*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -85,6 +95,14 @@ public class AptController {
 
             arrayList.add(apt);
         }
+
+        HashMap delMap =new HashMap();
+
+        delMap.put("lawdCd", lawdCD);
+        delMap.put("dealYear", dealYear);
+        delMap.put("dealMon", dealMon);
+
+        int delCount =aptService.deleteAptData(delMap);
 
         aptService.saveAptData(arrayList);
 
